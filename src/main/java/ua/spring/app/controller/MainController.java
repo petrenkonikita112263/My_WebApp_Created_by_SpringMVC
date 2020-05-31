@@ -11,9 +11,18 @@ public class MainController {
         return "public-page";
     }
 
-    @GetMapping("/customers")
+    @GetMapping("/guests")
     public String showHome() {
         return "home";
     }
 
+    @GetMapping("/customers")
+    public String showCustomerPage() {
+        return "customers";
+    }
+
+    @GetMapping("/systems")
+    public String showAdminPage() {
+        return "admins";
+    }
 }

@@ -12,7 +12,7 @@
         <p>
             But for <em>further survey</em> you've to <strong>log in</strong>.
             <br>
-            <a href="${pageContext.request.contextPath}/customers">Access Secure Site</a>
+            <a href="${pageContext.request.contextPath}/guests">Access Secure Site</a>
         </p>
     </body>
 </html>
