@@ -7,6 +7,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class MainController {
 
     @GetMapping("/")
+    public String showPublicPage() {
+        return "public-page";
+    }
+
+    @GetMapping("/customers")
     public String showHome() {
         return "home";
     }

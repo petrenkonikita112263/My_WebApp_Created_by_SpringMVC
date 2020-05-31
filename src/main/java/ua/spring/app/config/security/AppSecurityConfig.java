@@ -18,13 +18,14 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
         auth.inMemoryAuthentication()
                 .withUser(users.username("nikita").password("pfhfpf2020").roles("GUEST"))
                 .withUser(users.username("mark").password("yoyo007").roles("OPERATOR"))
-                .withUser(users.username("nataly").password("woman90_60_90").roles("DIRECTOR"));
+                .withUser(users.username("nataly").password("woman").roles("DIRECTOR"));
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .anyRequest().authenticated()
+                .antMatchers("/").permitAll()
+                .antMatchers("/customers").hasRole("GUEST")
             .and()
                 .formLogin()
                 .loginPage("/showLoginPage")
@@ -32,6 +33,7 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
             .and()
                 .logout()
+                .logoutSuccessUrl("/")
                 .permitAll();
     }
 }
