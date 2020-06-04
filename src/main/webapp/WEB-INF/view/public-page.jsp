@@ -8,6 +8,13 @@
             Greetings! This page is open to the <strong>public</strong> view.
             It's not required to log in anyone.
         </p>
+        <br>
+        <p>Additional info</p>
+        <ul>
+            <li><a href="${pageContext.request.contextPath}/showFlights">Flight Page</a></li>
+            <li><a href="${pageContext.request.contextPath}/showPlanes">Plane Page</a></li>
+            <li><a href="${pageContext.request.contextPath}/showAirports">Airport Page</a></li>
+        </ul>
         <hr>
         <p>
             But for <em>further survey</em> you've to <strong>log in</strong>.
