@@ -1,7 +1,6 @@
 package ua.spring.app.dao;
 
 import oracle.jdbc.driver.OracleDriver;
-import org.apache.ibatis.jdbc.ScriptRunner;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -10,53 +9,55 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.core.io.support.EncodedResource;
 import org.springframework.jdbc.datasource.init.ScriptUtils;
-import org.springframework.stereotype.Component;
-import org.springframework.util.ResourceUtils;
+import org.springframework.stereotype.Repository;
 
 import javax.annotation.PostConstruct;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
-import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.sql.*;
 import java.util.Hashtable;
 
-@Component
+@Repository
 @PropertySource("classpath:application.properties")
 public class ManageDb implements Connectable {
 
     private static final Logger LOGGER = Logger.getLogger(ManageDb.class);
     private DataSource dataSource;
     private Context context;
-    private Connection connection;
-    private ResultSet rs;
-    private PreparedStatement ps;
+    protected Connection connection;
+    protected ResultSet rs;
+    protected PreparedStatement ps;
     private Hashtable<String, String> hashtable = new Hashtable<>();
 
-
+    @Value("${URL_DB}")
     private String urlAddress;
 
-
+    @Value("${JNDI_NAME_DB}")
     private String nameDataBase;
 
-
+    @Value("${CONTEXT_FACTORY}")
     private String contextFactory;
 
-    public void setUrlAddress(@Value("${URL_DB}")String urlAddress) {
-        this.urlAddress = urlAddress;
-    }
-
-    public void setNameDataBase(@Value("${JNDI_NAME_DB}")String nameDataBase) {
-        this.nameDataBase = nameDataBase;
-    }
-
-    public void setContextFactory(@Value("${CONTEXT_FACTORY}")String contextFactory) {
-        this.contextFactory = contextFactory;
-    }
-
     private Driver driver;
+
+//    @Override
+//    public void connectDB() {
+//        hashtable.put(Context.INITIAL_CONTEXT_FACTORY, contextFactory);
+//        hashtable.put(Context.PROVIDER_URL, urlAddress);
+//        try {
+//            context = new InitialContext(hashtable);
+//            dataSource = (DataSource) context.lookup(nameDataBase);
+//            connection = dataSource.getConnection();
+//            LOGGER.info("Connection successfully got");
+//        } catch (NamingException e) {
+//            LOGGER.error("Wrong url or name, can't find this server", e);
+//        } catch (SQLException e) {
+//            LOGGER.error("Can't access to our DB", e);
+//        }
+//    }
 
     @Override
     public void connectDB() {
@@ -66,26 +67,14 @@ public class ManageDb implements Connectable {
             connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE",
                     "FIRST_OWN_DB", "ujhskf[][fnf");
             if (!connection.isClosed()) {
-                System.out.println("Connection is successful");
+                LOGGER.info("Connection is successful");
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-//        LOGGER.info("Set parameters for connection");
-//        hashtable.put(Context.INITIAL_CONTEXT_FACTORY, "weblogic.jndi.WLInitialContextFactory");
-//        hashtable.put(Context.PROVIDER_URL, "t3://localhost:7001");
-//        try {
-//            context = new InitialContext(hashtable);
-//            dataSource = (DataSource) context.lookup("Test_1_Weblogic");
-//            connection = dataSource.getConnection();
-//            LOGGER.info("Connection successfully got");
-//        } catch (NamingException e) {
-//            LOGGER.error("Wrong url or name, can't find this server", e);
-//        } catch (SQLException e) {
-//            LOGGER.error("Can't access to our DB", e);
-//        }
     }
-@Autowired
+
+    @Autowired
     private ResourceLoader resourceLoader;
 
     private int numberTables;
@@ -99,8 +88,10 @@ public class ManageDb implements Connectable {
             numberTables = rs.getInt("QUANTITY");
         }
         if (numberTables == 0) {
-            Resource resource = resourceLoader.getResource("classpath:app_script.sql");
-            ScriptUtils.executeSqlScript(connection, new EncodedResource(resource, StandardCharsets.UTF_8));
+            Resource resourceCreation = resourceLoader.getResource("classpath:app_script.sql");
+            Resource resourceFilling = resourceLoader.getResource("classpath:fillingTables.sql");
+            ScriptUtils.executeSqlScript(connection, new EncodedResource(resourceCreation, StandardCharsets.UTF_8));
+            ScriptUtils.executeSqlScript(connection, new EncodedResource(resourceFilling, StandardCharsets.UTF_8));
         }
         disconnectDB();
     }
@@ -114,14 +105,14 @@ public class ManageDb implements Connectable {
             if (ps != null) {
                 ps.close();
             }
-            if (connection != null) {
-                connection.close();
-            }
-            if (context != null) {
-                context.close();
-            }
-        } catch (NamingException e) {
-            LOGGER.error("Wrong url or name, can't find this server", e);
+            connection.close();
+//            if (connection != null) {
+//                connection.close();
+//            }
+//            if (context != null) {
+//                context.close();
+//            }
+//            context.close();
         } catch (SQLException e) {
             LOGGER.error("Can't disconnect from our DB", e);
         }
