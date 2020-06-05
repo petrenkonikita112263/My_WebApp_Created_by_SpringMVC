@@ -173,12 +173,11 @@ public class CustomerDaoImpl extends ManageDb implements CustomerDao {
         connectDB();
         try {
             ps = connection.prepareStatement("INSERT INTO LAB3PN_USERS(CUSTOMER_ID, USERNAME, PASSWORD, AUTHORITY, ENABLED)\n" +
-                    "VALUES(LAB3PN_USERS_SEQ.NEXTVAL, ?, ?, 'ROLE_CUSTOMER', 1)");
+                    "VALUES(USERS_SEQ.NEXTVAL, ?, ?, 'ROLE_CUSTOMER', 1)");
             ps.setString(1, name);
             ps.setString(2, password);
-//            ps.setString(3, "ROLE_CUSTOMER");
+            rs = ps.executeQuery();
             LOGGER.info("Customer was added");
-//            System.out.println(name + " | " + password);
         } catch (SQLException e) {
             LOGGER.error("Invalid sql query", e);
         } finally {
@@ -214,6 +213,7 @@ public class CustomerDaoImpl extends ManageDb implements CustomerDao {
             ps.setString(1, customerName);
             ps.setString(2, customerPassword);
             ps.setInt(3, id);
+            rs = ps.executeQuery();
         } catch (SQLException e) {
             LOGGER.error("Invalid sql query", e);
         } finally {
