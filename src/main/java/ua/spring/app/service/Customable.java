@@ -23,6 +23,8 @@ public interface Customable {
 
     Customer findById(int id);
 
-    void updateCustomerData(String id, String customerName, String customerPassword);
+    void updateCustomerData(int id, String customerName, String customerPassword);
+
+    Ticket getFlightTicketById(int id);
 
 }

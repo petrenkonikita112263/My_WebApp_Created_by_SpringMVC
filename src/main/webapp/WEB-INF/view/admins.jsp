@@ -18,6 +18,8 @@
                 <li><a href="${pageContext.request.contextPath}/systems/showCustomers">Display whole
                     the list of available customers</a></li>
                 <li><a href="${pageContext.request.contextPath}/systems/showCustomerForm">Create new customer</a></li>
+                <li><a href="${pageContext.request.contextPath}/showTicket">Display available flight's ticket</a></li>
+            <li><a href="${pageContext.request.contextPath}/systems/showFlightTicketForm">Add new flight ticket</a></li>
             </ul>
         </p>
         <hr>

@@ -52,8 +52,8 @@ public class DisplayController {
         return modelAndView;
     }
 
-    @PreAuthorize("hasAuthority('CUSTOMER')")
-    @GetMapping(value = "/customers/showTicket")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'CUSTOMER')")
+    @GetMapping(value = "/showTicket")
     public ModelAndView getTickets(ModelAndView modelAndView) {
         LOGGER.info("Method to get tickets was called");
         modelAndView.addObject("listOfTicket", customerService.listTicket());
@@ -102,9 +102,7 @@ public class DisplayController {
             model.addAttribute("msg", "Customer not found");
         }
         model.addAttribute("customer", customer);
-
         return "customer-by-id";
-
     }
 
 }

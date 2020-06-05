@@ -8,14 +8,13 @@
 </head>
     <body>
     <p>Change exist customer</p>
-    <form:form action="${pageContext.request.contextPath}/systems/addCustomer" method="post">
-        <%--            Id:--%>
-        <%--            <input type="text" name="number" required placeholder="Enter 0">--%>
+    <form:form action="${pageContext.request.contextPath}/systems/updateCustomer" method="post">
+        <input type="hidden" name="customerId" value="${customer.id}">
         Username:
         <input type="text" name="name" placeholder="name">
         Password:
-        <input type="text" name="password" required placeholder="Enter {bcrypt}.........." />
-        <input type="submit" value="Create" />
+        <input type="text" name="password" required value="{noop}">
+        <input type="submit" value="Submit">
     </form:form>
     <br>
     <security:authorize access="hasRole('ADMIN')">

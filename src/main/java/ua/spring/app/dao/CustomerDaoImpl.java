@@ -173,7 +173,7 @@ public class CustomerDaoImpl extends ManageDb implements CustomerDao {
         connectDB();
         try {
             ps = connection.prepareStatement("INSERT INTO LAB3PN_USERS(CUSTOMER_ID, USERNAME, PASSWORD, AUTHORITY, ENABLED)\n" +
-                    "VALUES(USERS_SEQ.NEXTVAL, ?, ?, 'ROLE_CUSTOMER', 1)");
+                    "VALUES(LAB3PN_USERS_SEQ.NEXTVAL, ?, ?, 'ROLE_CUSTOMER', 1)");
             ps.setString(1, name);
             ps.setString(2, password);
             rs = ps.executeQuery();
@@ -208,8 +208,8 @@ public class CustomerDaoImpl extends ManageDb implements CustomerDao {
     public void updateCustomerData(int id, String customerName, String customerPassword) {
         connectDB();
         try {
-            ps = connection.prepareStatement("UPDATE LAB3PN_USERS\n" +
-                    "SET USERNAME = ?, PASSWORD = ? WHERE CUSTOMER_ID = ? AND AUTHORITY LIKE 'ROLE_CUSTOMER'");
+            ps = connection.prepareStatement("UPDATE LAB3PN_USERS " +
+                    "SET USERNAME = ?, PASSWORD = ? WHERE CUSTOMER_ID = ?");
             ps.setString(1, customerName);
             ps.setString(2, customerPassword);
             ps.setInt(3, id);
@@ -219,5 +219,25 @@ public class CustomerDaoImpl extends ManageDb implements CustomerDao {
         } finally {
             disconnectDB();
         }
+    }
+
+
+    @Override
+    public Ticket getFlightTicketById(int id) {
+        Ticket ticket = null;
+        connectDB();
+        try {
+            ps = connection.prepareStatement("SELECT * FROM LAB3PN_TICKET WHERE TICKET_ID = ?");
+            ps.setInt(1, id);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                ticket = parseTicket(rs);
+            }
+        } catch (SQLException e) {
+            LOGGER.error("Invalid sql query", e);
+        } finally {
+            disconnectDB();
+        }
+        return ticket;
     }
 }

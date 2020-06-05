@@ -2,13 +2,12 @@ package ua.spring.app.dao;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Repository;
 import ua.spring.app.entity.Airport;
 import ua.spring.app.entity.Flight;
 import ua.spring.app.entity.Plane;
 
-
-import java.sql.*;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 

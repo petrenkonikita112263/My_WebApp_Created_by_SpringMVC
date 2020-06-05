@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import ua.spring.app.service.Customable;
+import ua.spring.app.service.Orderable;
 
 @Controller
 public class RemoveController {
@@ -17,11 +18,24 @@ public class RemoveController {
     @Autowired
     private Customable customerService;
 
+    @Autowired
+    private Orderable orderService;
+
     @PreAuthorize("hasAuthority('ADMIN')")
     @RequestMapping(value = "/systems/removeCustomer/{customerId}")
     public ModelAndView delete(ModelAndView model, @PathVariable("customerId") int customerId) {
         LOGGER.info("Method to remove customer was called");
         customerService.removeCustomer(customerId);
+        model.setViewName("remove-data");
+        LOGGER.info("Successfully redirect to the jsp page");
+        return model;
+    }
+
+    @PreAuthorize("hasAuthority('ADMIN')")
+    @RequestMapping(value = "/systems/removeFlightTicket/{ticketId}")
+    public ModelAndView deleteTicket(ModelAndView model, @PathVariable("ticketId") int ticketId) {
+        LOGGER.info("Method to remove ticket was called");
+        orderService.removeFlightTicket(ticketId);
         model.setViewName("remove-data");
         LOGGER.info("Successfully redirect to the jsp page");
         return model;

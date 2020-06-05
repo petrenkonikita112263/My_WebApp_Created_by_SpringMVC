@@ -26,19 +26,6 @@ public interface CustomerDao {
 
     void updateCustomerData(int id, String name, String password);
 
-//
-//    void addOrderTicket(int orderId, int customerId, Date orderTime, double price,
-//                        double discount, double finalPrice);
-//
-//    List<OrderTicket> listOrders();
-//
-//    void removeOrderTicket(int id);
-//
-//    OrderTicket getOrder(int id);
-//
-//    void editOrderTicket(int orderId, int customerId, Date orderTime, double price,
-//                         double discount, double finalPrice);
-//
-//    void addCustomer(int customerId, String customerName, String customerPassword);
+    Ticket getFlightTicketById(int id);
 
 }

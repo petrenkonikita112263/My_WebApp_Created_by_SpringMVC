@@ -52,7 +52,12 @@ public class CustomService implements Customable {
     }
 
     @Override
-    public void updateCustomerData(String id, String customerName, String customerPassword) {
-        customerDao.updateCustomerData(Integer.parseInt(id), customerName, customerPassword);
+    public void updateCustomerData(int id, String customerName, String customerPassword) {
+        customerDao.updateCustomerData(id, customerName, customerPassword);
+    }
+
+    @Override
+    public Ticket getFlightTicketById(int id) {
+        return customerDao.getFlightTicketById(id);
     }
 }
