@@ -29,7 +29,8 @@ public class UpdateController {
     public ModelAndView getCustomerEditForm(@PathVariable("customerId") int customerId,
                                       ModelAndView modelAndView) {
         modelAndView.addObject("customer", customerService.findById(customerId));
-        modelAndView.setViewName("edit-data");
+        modelAndView.addObject("operation", "update");
+        modelAndView.setViewName("addEditCustomer");
         return modelAndView;
     }
 
@@ -50,9 +51,10 @@ public class UpdateController {
     @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping(value = "/systems/showFlightTicketEditForm/{ticketId}")
     public ModelAndView getFlightTicketEditForm(ModelAndView modelAndView, @PathVariable("ticketId") int ticketId) {
-        modelAndView.setViewName("editFlightTicket");
+        modelAndView.setViewName("addEditFlightTicket");
         modelAndView.addObject("flights", displayService.getFlightInfo());
         modelAndView.addObject("ticket", customerService.getFlightTicketById(ticketId));
+        modelAndView.addObject("operation", "update");
         return modelAndView;
     }
 

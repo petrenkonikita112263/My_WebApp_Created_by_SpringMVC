@@ -33,8 +33,10 @@ public class AddController {
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping(value = "/systems/showCustomerForm")
-    public String getCustomerForm() {
-        return "add-data";
+    public ModelAndView getCustomerForm(ModelAndView modelAndView) {
+        modelAndView.addObject("operation", "add");
+        modelAndView.setViewName("addEditCustomer");
+        return modelAndView;
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
@@ -53,8 +55,9 @@ public class AddController {
     @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping(value = "/systems/showFlightTicketForm")
     public ModelAndView getTicketForm(ModelAndView modelAndView) {
-        modelAndView.setViewName("addFlightTicket");
+        modelAndView.setViewName("addEditFlightTicket");
         modelAndView.addObject("flights", displayService.getFlightInfo());
+        modelAndView.addObject("operation", "add");
         return modelAndView;
     }
 
@@ -62,13 +65,14 @@ public class AddController {
     @PostMapping(value = "/systems/addFlightTicket")
     public ModelAndView createFlightTicket(ModelAndView modelAndView,
                                            @RequestParam(value = "number", required = false) String number,
-                                           @RequestParam(value = "flightId", required = false) int id,
+                                           @RequestParam(value = "flightId", required = false) int flightId,
                                            @RequestParam(value = "text", required = false) String text,
                                            @RequestParam(value = "startDate", required = false) String startDate,
                                            @RequestParam(value = "endDate", required = false) String endDate,
                                            @RequestParam(value = "price", required = false) Double price) {
         LOGGER.info("Method to create new flight ticket was called");
-        orderService.addFlightTicket(number, id, text, startDate, endDate, price);
+        System.out.println(number + flightId + text + startDate + endDate + price);
+        orderService.addFlightTicket(number, flightId, text, startDate, endDate, price);
         modelAndView.addObject("infoMessage", "new ticket");
         modelAndView.setViewName("admins");
         LOGGER.info("Successfully redirect to the jsp page");
