@@ -3,6 +3,7 @@ package ua.spring.app.dao;
 import ua.spring.app.entity.OrderTicket;
 import ua.spring.app.entity.Ticket;
 
+import java.sql.Date;
 import java.util.List;
 
 public interface OrderDao {
@@ -28,8 +29,8 @@ public interface OrderDao {
                           String endDate, double price);
 
 
-    //    void addOrderTicket(int orderId, int customerId, Date orderTime, double price,
-//                        double discount, double finalPrice);
+    void addOrderTicket(String customerName, Date orderTime, double price,
+                        double discount, double finalPrice);
 //
 //    List<OrderTicket> listOrders();
 //

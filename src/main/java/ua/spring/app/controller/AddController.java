@@ -4,12 +4,16 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import ua.spring.app.entity.util.DateManager;
 import ua.spring.app.service.Customable;
 import ua.spring.app.service.Orderable;
 import ua.spring.app.service.Showable;
+
+import java.security.Principal;
 
 @Controller
 public class AddController {
@@ -24,6 +28,8 @@ public class AddController {
 
     @Autowired
     private Orderable orderService;
+
+    private DateManager dateManager;
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping(value = "/systems/showCustomerForm")
@@ -69,4 +75,25 @@ public class AddController {
         return modelAndView;
     }
 
+    @PreAuthorize("hasAuthority('CUSTOMER')")
+    @GetMapping(value = "/customers/showTicketBuyForm")
+    public String getTicketBuyForm() {
+        return "buyTicket";
+    }
+
+    @PreAuthorize("hasAuthority('CUSTOMER')")
+    @PostMapping(value = "/customers/buyTicket")
+    public ModelAndView addBuyTicketToBasket(ModelAndView modelAndView,
+                                             Principal principal,
+                                             @RequestParam(value = "ticketPrice", required = false) String ticketPrice,
+                                             @RequestParam(value = "discount", required = false) String discount,
+                                             @RequestParam(value = "finalPrice", required = false) String finalPrice
+                                             ) {
+        LOGGER.info("Method to save, already bought flight ticket was called");
+        String customerName = principal.getName();
+        orderService.buyTicket(customerName, new DateManager().getCurrentDate(), ticketPrice, discount, finalPrice);
+        modelAndView.setViewName("customers");
+        LOGGER.info("Successfully redirect to the jsp page");
+        return modelAndView;
+    }
 }

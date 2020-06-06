@@ -20,6 +20,7 @@
                     the list of customer's orders</a></li>
                 <li><a href="${pageContext.request.contextPath}/customers/showOrderTicket">Display whole
                     the list of ordered tickets</a></li>
+                <li><a href="${pageContext.request.contextPath}/customers/showTicketBuyForm">Buy the ticket</a></li>
             </ul>
         </p>
     <hr>

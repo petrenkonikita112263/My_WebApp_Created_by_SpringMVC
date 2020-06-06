@@ -3,6 +3,7 @@ package ua.spring.app.dao;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 
+import java.sql.Date;
 import java.sql.SQLException;
 
 @Component
@@ -300,6 +301,28 @@ public class OrderDaoImpl extends ManageDb implements OrderDao {
             rs = ps.executeQuery();
         } catch (SQLException e) {
             LOGGER.error("Invalid sql query", e);
+        } finally {
+            disconnectDB();
+        }
+    }
+
+    @Override
+    public void addOrderTicket(String customerName, Date orderTime, double price,
+                               double discount, double finalPrice) {
+        connectDB();
+        try {
+            ps = connection.prepareStatement("INSERT INTO LAB3PN_CUSTOMER_ORDER(CUSTOMER_ORDER_ID, CUSTOMER_ID, "
+                    + "ORDER_TIME, PRICE, DISCOUNT, FINAL_PRICE) VALUES (LAB3PN_CUSTOMER_SEQ.NEXTVAL, "
+                    + "(SELECT CUSTOMER_ID FROM LAB3PN_USERS WHERE LAB3PN_USERS.USERNAME = ?), "
+                    + "?, ?, ?, ?)");
+            ps.setString(1, customerName);
+            ps.setDate(2, orderTime);
+            ps.setDouble(3, price);
+            ps.setDouble(4, discount);
+            ps.setDouble(5, finalPrice);
+            rs = ps.executeQuery();
+        } catch (SQLException e) {
+            LOGGER.error("Invalid sql query or wrong column name", e);
         } finally {
             disconnectDB();
         }
