@@ -10,9 +10,9 @@ import java.util.List;
 
 public interface CustomerDao {
 
-    List<CustomerOrder> listCustomerOrder();
+    List<CustomerOrder> listOwnOrderHistory(String customerName);
 
-    List<OrderTicket> listOrderTicket();
+    List<OrderTicket> listOwnOrderTicketHistory(String customerName);
 
     List<Ticket> listTicket();
 

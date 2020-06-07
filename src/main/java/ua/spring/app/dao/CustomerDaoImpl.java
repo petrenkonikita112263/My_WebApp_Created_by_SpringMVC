@@ -32,11 +32,14 @@ public class CustomerDaoImpl extends ManageDb implements CustomerDao {
     }
 
     @Override
-    public List<OrderTicket> listOrderTicket() {
+    public List<OrderTicket> listOwnOrderTicketHistory(String customerName) {
         List<OrderTicket> orders = new ArrayList<>();
         try {
             connectDB();
-            ps = connection.prepareStatement("SELECT * FROM LAB3PN_ORDER_TICKET");
+            ps = connection.prepareStatement("SELECT * FROM LAB3PN_ORDER_TICKET WHERE CUSTOMER_ORDER_ID = "
+                    + "(SELECT CUSTOMER_ORDER_ID FROM LAB3PN_CUSTOMER_ORDER WHERE CUSTOMER_ID = "
+                    + "(SELECT CUSTOMER_ID FROM LAB3PN_USERS WHERE USERNAME LIKE ?) AND ROWNUM = 1)");
+            ps.setString(1, customerName);
             rs = ps.executeQuery();
             OrderTicket orderTicket;
             while (rs.next()) {
@@ -64,11 +67,13 @@ public class CustomerDaoImpl extends ManageDb implements CustomerDao {
     }
 
     @Override
-    public List<CustomerOrder> listCustomerOrder() {
+    public List<CustomerOrder> listOwnOrderHistory(String customerName) {
         List<CustomerOrder> customerOrders = new ArrayList<>();
         try {
             connectDB();
-            ps = connection.prepareStatement("SELECT * FROM LAB3PN_CUSTOMER_ORDER");
+            ps = connection.prepareStatement("SELECT * FROM LAB3PN_CUSTOMER_ORDER WHERE CUSTOMER_ID = "
+                    + "(SELECT CUSTOMER_ID FROM LAB3PN_USERS WHERE USERNAME = ?)");
+            ps.setString(1, customerName);
             rs = ps.executeQuery();
             CustomerOrder customerOrder;
             while (rs.next()) {

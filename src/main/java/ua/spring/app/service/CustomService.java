@@ -22,13 +22,13 @@ public class CustomService implements Customable {
     }
 
     @Override
-    public List<CustomerOrder> listCustomerOrder() {
-        return customerDao.listCustomerOrder();
+    public List<CustomerOrder> getOwnOrderHistory(String username) {
+        return customerDao.listOwnOrderHistory(username);
     }
 
     @Override
-    public List<OrderTicket> listOrderTicket() {
-        return customerDao.listOrderTicket();
+    public List<OrderTicket> getOwnOrderTicketHistory(String username) {
+        return customerDao.listOwnOrderTicketHistory(username);
     }
 
     @Override

@@ -9,9 +9,9 @@ import java.util.List;
 
 public interface Customable {
 
-    List<CustomerOrder> listCustomerOrder();
+    List<CustomerOrder> getOwnOrderHistory(String username);
 
-    List<OrderTicket> listOrderTicket();
+    List<OrderTicket> getOwnOrderTicketHistory(String username);
 
     List<Ticket> listTicket();
 

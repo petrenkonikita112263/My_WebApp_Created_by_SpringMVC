@@ -6,6 +6,7 @@
 </head>
     <body>
     <div class="container">
+        <c:if test="${history == 'customerOrder'}">
         <table class="table">
             <caption>List of cutstomers orders</caption>
             <thead>
@@ -31,9 +32,11 @@
                 </tbody>
             </c:forEach>
         </table>
+        </c:if>
         <br>
         <hr>
         <br>
+        <c:if test="${history == 'customerOrderTicket'}">
         <table class="table">
             <caption>List of orders</caption>
             <thead>
@@ -43,16 +46,17 @@
                 <th scope="col">TICKET_ID</th>
             </tr>
             </thead>
-            <c:forEach items="${orderedTickets}" var="temp">
+            <c:forEach items="${orderedTickets}" var="var">
                 <tbody>
                 <tr>
-                    <th scope="row">${temp.orderId}</th>
-                    <td>${temp.customerOrderId}</td>
-                    <td>${temp.ticketId}</td>
+                    <th scope="row">${var.orderId}</th>
+                    <td>${var.customerOrderId}</td>
+                    <td>${var.ticketId}</td>
                 </tr>
                 </tbody>
             </c:forEach>
         </table>
+        </c:if>
     </div>
     <hr>
     Back to the customer page <a href="${pageContext.request.contextPath}/customers">page</a>

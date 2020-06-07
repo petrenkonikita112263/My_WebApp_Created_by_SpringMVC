@@ -14,6 +14,8 @@ import ua.spring.app.entity.Customer;
 import ua.spring.app.service.Customable;
 import ua.spring.app.service.Showable;
 
+import java.security.Principal;
+
 @Controller
 public class DisplayController {
 
@@ -64,9 +66,11 @@ public class DisplayController {
 
     @PreAuthorize("hasAuthority('CUSTOMER')")
     @GetMapping(value = "/customers/showCustomerOrder")
-    public ModelAndView getCustomerOrder(ModelAndView modelAndView) {
+    public ModelAndView getCustomerOrder(ModelAndView modelAndView, Principal principal) {
         LOGGER.info("Method to get customer's orders was called");
-        modelAndView.addObject("customersOrders", customerService.listCustomerOrder());
+        String username = principal.getName();
+        modelAndView.addObject("customersOrders", customerService.getOwnOrderHistory(username));
+        modelAndView.addObject("history", "customerOrder");
         modelAndView.setViewName("order");
         LOGGER.info("Successfully redirect to the jsp page");
         return modelAndView;
@@ -74,9 +78,11 @@ public class DisplayController {
 
     @PreAuthorize("hasAuthority('CUSTOMER')")
     @GetMapping(value = "/customers/showOrderTicket")
-    public ModelAndView getOrderTicket(ModelAndView modelAndView) {
+    public ModelAndView getOrderTicket(ModelAndView modelAndView, Principal principal) {
         LOGGER.info("Method to get ordered ticket was called");
-        modelAndView.addObject("orderedTickets", customerService.listOrderTicket());
+        String username = principal.getName();
+        modelAndView.addObject("orderedTickets", customerService.getOwnOrderTicketHistory(username));
+        modelAndView.addObject("history", "customerOrderTicket");
         modelAndView.setViewName("order");
         LOGGER.info("Successfully redirect to the jsp page");
         return modelAndView;
