@@ -20,6 +20,16 @@
             Final Price:
             <input type="text" name="finalPrice" placeholder="0000.00" required>
             <br>
+            Ticket Id:
+            <select required name="id">
+                <option value="-1">Select the id</option>
+                <c:forEach items="${tickets}" var="var">
+                    <option value="${var.ticketId}">
+                            ${var.ticketId}
+                    </option>
+                </c:forEach>
+            </select>
+            <br>
             <input type="submit" value="Submit">
         </form:form>
     </body>

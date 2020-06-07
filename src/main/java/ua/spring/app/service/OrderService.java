@@ -30,8 +30,8 @@ public class OrderService implements Orderable {
     }
 
     @Override
-    public void buyTicket(String customerName, Date orderTime, String price, String discount, String finalPrice) {
+    public void buyTicket(String customerName, Date orderTime, String price, String discount, String finalPrice, int ticketId) {
         orderDao.addOrderTicket(customerName, orderTime, Double.parseDouble(price),
-                Double.parseDouble(discount), Double.parseDouble(finalPrice));
+                Double.parseDouble(discount), Double.parseDouble(finalPrice), ticketId);
     }
 }

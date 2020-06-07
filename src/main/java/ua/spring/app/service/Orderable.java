@@ -13,6 +13,5 @@ public interface Orderable {
                           String endDate, double price);
 
     void buyTicket(String customerName, Date orderTime, String price,
-                        String discount, String finalPrice);
-
+                        String discount, String finalPrice, int ticketId);
 }

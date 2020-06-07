@@ -81,8 +81,10 @@ public class AddController {
 
     @PreAuthorize("hasAuthority('CUSTOMER')")
     @GetMapping(value = "/customers/showTicketBuyForm")
-    public String getTicketBuyForm() {
-        return "buyTicket";
+    public ModelAndView getTicketBuyForm(ModelAndView modelAndView) {
+        modelAndView.addObject("tickets", customerService.listTicket());
+        modelAndView.setViewName("buyTicket");
+        return modelAndView;
     }
 
     @PreAuthorize("hasAuthority('CUSTOMER')")
@@ -91,11 +93,11 @@ public class AddController {
                                              Principal principal,
                                              @RequestParam(value = "ticketPrice", required = false) String ticketPrice,
                                              @RequestParam(value = "discount", required = false) String discount,
-                                             @RequestParam(value = "finalPrice", required = false) String finalPrice
-                                             ) {
+                                             @RequestParam(value = "finalPrice", required = false) String finalPrice,
+                                             @RequestParam(value = "id", required = false) Integer id) {
         LOGGER.info("Method to save, already bought flight ticket was called");
         String customerName = principal.getName();
-        orderService.buyTicket(customerName, new DateManager().getCurrentDate(), ticketPrice, discount, finalPrice);
+        orderService.buyTicket(customerName, new DateManager().getCurrentDate(), ticketPrice, discount, finalPrice, id);
         modelAndView.setViewName("customers");
         LOGGER.info("Successfully redirect to the jsp page");
         return modelAndView;
