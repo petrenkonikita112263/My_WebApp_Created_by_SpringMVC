@@ -14,8 +14,8 @@ public class OrderService implements Orderable {
 
     @Override
     public void addFlightTicket(String number, int flightId, String text, String startDate,
-                                String endDate, double price) {
-        orderDao.addFlightTicket(number, flightId, text, startDate, endDate, price);
+                                String endDate, String price) {
+        orderDao.addFlightTicket(number, flightId, text, startDate, endDate, Double.parseDouble(price));
     }
 
     @Override
@@ -25,8 +25,8 @@ public class OrderService implements Orderable {
 
     @Override
     public void editFlightTicket(Integer id, String number, int flightId, String text, String startDate,
-                                 String endDate, double price) {
-        orderDao.editFlightTicket(id, number, flightId, text, startDate, endDate, price);
+                                 String endDate, String price) {
+        orderDao.editFlightTicket(id, number, flightId, text, startDate, endDate, Double.parseDouble(price));
     }
 
     @Override

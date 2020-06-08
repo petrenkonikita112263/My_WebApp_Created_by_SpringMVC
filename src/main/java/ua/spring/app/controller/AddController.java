@@ -67,7 +67,7 @@ public class AddController {
                                            @RequestParam(value = "text", required = false) String text,
                                            @RequestParam(value = "startDate", required = false) String startDate,
                                            @RequestParam(value = "endDate", required = false) String endDate,
-                                           @RequestParam(value = "price", required = false) Double price) {
+                                           @RequestParam(value = "price", required = false) String price) {
         LOGGER.info("Method to create new flight ticket was called");
         System.out.println(number + flightId + text + startDate + endDate + price);
         orderService.addFlightTicket(number, flightId, text, startDate, endDate, price);

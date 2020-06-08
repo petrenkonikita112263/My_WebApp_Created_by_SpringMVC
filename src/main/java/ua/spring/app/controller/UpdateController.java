@@ -67,7 +67,7 @@ public class UpdateController {
                                            @RequestParam(value = "text", required = false) String text,
                                            @RequestParam(value = "startDate", required = false) String startDate,
                                            @RequestParam(value = "endDate", required = false) String endDate,
-                                           @RequestParam(value = "price", required = false) Double price) {
+                                           @RequestParam(value = "price", required = false) String price) {
         LOGGER.info("Method to edit existed ticket was called");
         orderService.editFlightTicket(ticketId, number, flightId, text, startDate, endDate, price);
         modelAndView.addObject("infoMessage", "new ticket");

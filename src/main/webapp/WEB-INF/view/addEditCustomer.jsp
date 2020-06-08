@@ -10,10 +10,23 @@
         <c:if test="${operation == 'add'}">
             <p>Add new customer</p>
             <form:form action="${pageContext.request.contextPath}/systems/addCustomer" method="post">
-                Username:
-                <input type="text" name="name" placeholder="name">
-                Password:
-                <input type="text" name="password" required value="{noop}">
+                <label for="username">Username:</label>
+                <input type="text"
+                       id="username"
+                       name="name"
+                       placeholder="Enter the username"
+                       pattern="^[a-zA-Z][a-zA-Z0-9-_\.]{1,50}$"
+                       title="The username must be wtih 2-50 chars"
+                       required>
+                <label for="userpassword">Password:</label>
+                <input type="text"
+                       id="userpassword"
+                       name="password"
+                       placeholder="Enter the password"
+                       pattern="^{noop}"
+                       title="The password should start with this text {noop} and after that type your password"
+                       value="{noop}"
+                       required>
                 <input type="submit" value="Submit">
             </form:form>
             <br>
@@ -30,10 +43,23 @@
             <p>Change existed customer</p>
             <form:form action="${pageContext.request.contextPath}/systems/updateCustomer" method="post">
                 <input type="hidden" name="customerId" value="${customer.id}">
-                Username:
-                <input type="text" name="name" placeholder="name">
-                Password:
-                <input type="text" name="password" required value="{noop}">
+                <label for="username">Username:</label>
+                <input type="text"
+                       id="username"
+                       name="name"
+                       placeholder="Enter the username"
+                       pattern="^[a-zA-Z][a-zA-Z0-9-_\.]{1,50}$"
+                       title="The username must be wtih 2-50 chars"
+                       required>
+                <label for="userpassword">Password:</label>
+                <input type="text"
+                       id="userpassword"
+                       name="password"
+                       placeholder="Enter the password"
+                       pattern="(?!({noop}|{bcrypt})$)\S+"
+                       title="The password should start with this text {noop} and after that type your password"
+                       value="{noop}"
+                       required>
                 <input type="submit" value="Submit">
             </form:form>
             <br>
