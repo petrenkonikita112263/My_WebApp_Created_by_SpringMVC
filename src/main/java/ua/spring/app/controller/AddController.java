@@ -4,9 +4,9 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import ua.spring.app.entity.util.DateManager;
 import ua.spring.app.service.Customable;
@@ -69,7 +69,6 @@ public class AddController {
                                            @RequestParam(value = "endDate", required = false) String endDate,
                                            @RequestParam(value = "price", required = false) String price) {
         LOGGER.info("Method to create new flight ticket was called");
-        System.out.println(number + flightId + text + startDate + endDate + price);
         orderService.addFlightTicket(number, flightId, text, startDate, endDate, price);
         modelAndView.addObject("infoMessage", "new ticket");
         modelAndView.setViewName("admins");
