@@ -1,10 +1,12 @@
 package ua.spring.app.entity.util;
 
+import java.sql.Date;
+
 public class DateManager {
 
-    public java.sql.Date getCurrentDate() {
+    public static Date getCurrentDate() {
         java.util.Date today = new java.util.Date();
-        return new java.sql.Date(today.getTime());
+        return new Date(today.getTime());
     }
 
 }

@@ -29,8 +29,6 @@ public class AddController {
     @Autowired
     private Orderable orderService;
 
-    private DateManager dateManager;
-
     @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping(value = "/systems/showCustomerForm")
     public ModelAndView getCustomerForm(ModelAndView modelAndView) {
@@ -97,7 +95,7 @@ public class AddController {
                                              @RequestParam(value = "id", required = false) Integer id) {
         LOGGER.info("Method to save, already bought flight ticket was called");
         String customerName = principal.getName();
-        orderService.buyTicket(customerName, new DateManager().getCurrentDate(), ticketPrice, discount, finalPrice, id);
+        orderService.buyTicket(customerName, DateManager.getCurrentDate(), ticketPrice, discount, finalPrice, id);
         modelAndView.setViewName("customers");
         LOGGER.info("Successfully redirect to the jsp page");
         return modelAndView;
