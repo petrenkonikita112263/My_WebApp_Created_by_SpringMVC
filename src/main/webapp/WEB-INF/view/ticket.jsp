@@ -1,9 +1,12 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <html>
 <head>
     <title>Ticket Page</title>
+    <spring:url var="css" value="/static/css/bootstrap.min.css" />
+    <link type="text/css" rel="stylesheet" href="${css}">
 </head>
     <body>
     <div class="container">
@@ -75,17 +78,19 @@
             </c:forEach>
         </table>
         </security:authorize>
-    </div>
-    <hr>
+    <hr class="my-4">
     <security:authorize access="hasRole('CUSTOMER')">
-        <p>
-            Back to the customer page <a href="${pageContext.request.contextPath}/customers">page</a>
-        </p>
+        Back to the customer
+        <button type="button" class="btn btn-secondary">
+            <a href="${pageContext.request.contextPath}/customers">page</a>
+        </button>
     </security:authorize>
     <security:authorize access="hasRole('ADMIN')">
-        <p>
-            Back to the admin page <a href="${pageContext.request.contextPath}/systems">page</a>
-        </p>
+        Back to the admin
+        <button type="button" class="btn btn-secondary">
+            <a href="${pageContext.request.contextPath}/systems">page</a>
+        </button>
     </security:authorize>
+    </div>
     </body>
 </html>

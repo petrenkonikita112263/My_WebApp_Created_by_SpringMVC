@@ -1,8 +1,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <html>
 <head>
     <title>Orders Page</title>
+    <spring:url var="css" value="/static/css/bootstrap.min.css" />
+    <link type="text/css" rel="stylesheet" href="${css}">
 </head>
     <body>
     <div class="container">
@@ -57,8 +60,11 @@
             </c:forEach>
         </table>
         </c:if>
+    <hr class="my-4">
+    Back to the customer
+    <button type="button" class="btn btn-secondary">
+        <a href="${pageContext.request.contextPath}/customers">page</a>
+    </button>
     </div>
-    <hr>
-    Back to the customer page <a href="${pageContext.request.contextPath}/customers">page</a>
     </body>
 </html>

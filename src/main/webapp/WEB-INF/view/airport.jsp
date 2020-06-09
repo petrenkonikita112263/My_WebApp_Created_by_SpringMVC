@@ -5,6 +5,8 @@
 <html>
 <head>
     <title>Airport Info Table</title>
+    <spring:url var="css" value="/static/css/bootstrap.min.css" />
+    <link type="text/css" rel="stylesheet" href="${css}">
 </head>
     <body>
     <div class="container">
@@ -27,8 +29,11 @@
                 </tbody>
             </c:forEach>
         </table>
+    <hr class="my-4">
+    Back to the welcome
+    <button type="button" class="btn btn-secondary">
+        <a href="${pageContext.request.contextPath}/">page</a>
+    </button>
     </div>
-    <hr>
-    Back to the welcome page <a href="${pageContext.request.contextPath}/">page</a>
     </body>
 </html>

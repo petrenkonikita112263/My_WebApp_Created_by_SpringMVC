@@ -10,6 +10,8 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import javax.sql.DataSource;
@@ -19,7 +21,7 @@ import java.beans.PropertyVetoException;
 @EnableWebMvc
 @ComponentScan(basePackages = "ua.spring.app")
 @PropertySource("classpath:application.properties")
-public class AppConfig {
+public class AppConfig implements WebMvcConfigurer {
 
     private static final Logger LOGGER = Logger.getLogger(AppConfig.class);
 
@@ -57,6 +59,12 @@ public class AppConfig {
         String propertyValue = env.getProperty(propertyName);
         int integerPropertyValue = Integer.parseInt(propertyValue);
         return integerPropertyValue;
+    }
+
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/static/**")
+                .addResourceLocations("/WEB-INF/resources/bootstrap/");
     }
 
 }
