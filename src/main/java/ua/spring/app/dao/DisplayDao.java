@@ -45,7 +45,6 @@ public class DisplayDao extends ManageDb implements Displayable {
         } catch (SQLException e) {
             LOGGER.error("Wrong column name", e);
         }
-        System.out.println(airport);
         return airport;
     }
 
@@ -83,7 +82,6 @@ public class DisplayDao extends ManageDb implements Displayable {
         } catch (SQLException e) {
             LOGGER.error("Wrong column name", e);
         }
-        System.out.println(flight);
         return flight;
     }
 
@@ -116,7 +114,6 @@ public class DisplayDao extends ManageDb implements Displayable {
         } catch (SQLException e) {
             LOGGER.error("Wrong column name", e);
         }
-        System.out.println(plane);
         return plane;
     }
 }

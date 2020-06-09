@@ -1,10 +1,6 @@
 package ua.spring.app.dao;
 
-import ua.spring.app.entity.OrderTicket;
-import ua.spring.app.entity.Ticket;
-
 import java.sql.Date;
-import java.util.List;
 
 public interface OrderDao {
 

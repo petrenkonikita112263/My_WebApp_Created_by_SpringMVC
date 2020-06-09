@@ -88,8 +88,8 @@ public class ManageDb implements Connectable {
             numberTables = rs.getInt("QUANTITY");
         }
         if (numberTables == 0) {
-            Resource resourceCreation = resourceLoader.getResource("classpath:app_script.sql");
-            Resource resourceFilling = resourceLoader.getResource("classpath:fillingTables.sql");
+            Resource resourceCreation = resourceLoader.getResource("classpath:creationScript.sql");
+            Resource resourceFilling = resourceLoader.getResource("classpath:fillingScript.sql");
             ScriptUtils.executeSqlScript(connection, new EncodedResource(resourceCreation, StandardCharsets.UTF_8));
             ScriptUtils.executeSqlScript(connection, new EncodedResource(resourceFilling, StandardCharsets.UTF_8));
         }

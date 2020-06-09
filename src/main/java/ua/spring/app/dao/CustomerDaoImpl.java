@@ -213,8 +213,8 @@ public class CustomerDaoImpl extends ManageDb implements CustomerDao {
     public void updateCustomerData(int id, String customerName, String customerPassword) {
         connectDB();
         try {
-            ps = connection.prepareStatement("UPDATE LAB3PN_USERS " +
-                    "SET USERNAME = ?, PASSWORD = ? WHERE CUSTOMER_ID = ?");
+            ps = connection.prepareStatement("UPDATE LAB3PN_USERS "
+                    + "SET USERNAME = ?, PASSWORD = ? WHERE CUSTOMER_ID = ?");
             ps.setString(1, customerName);
             ps.setString(2, customerPassword);
             ps.setInt(3, id);
