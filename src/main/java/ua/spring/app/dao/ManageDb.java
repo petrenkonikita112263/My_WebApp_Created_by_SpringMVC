@@ -1,6 +1,5 @@
 package ua.spring.app.dao;
 
-import oracle.jdbc.driver.OracleDriver;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -17,7 +16,10 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 import java.nio.charset.StandardCharsets;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Hashtable;
 
 @Repository
@@ -41,43 +43,26 @@ public class ManageDb implements Connectable {
     @Value("${CONTEXT_FACTORY}")
     private String contextFactory;
 
-    private Driver driver;
-
-//    @Override
-//    public void connectDB() {
-//        hashtable.put(Context.INITIAL_CONTEXT_FACTORY, contextFactory);
-//        hashtable.put(Context.PROVIDER_URL, urlAddress);
-//        try {
-//            context = new InitialContext(hashtable);
-//            dataSource = (DataSource) context.lookup(nameDataBase);
-//            connection = dataSource.getConnection();
-//            LOGGER.info("Connection successfully got");
-//        } catch (NamingException e) {
-//            LOGGER.error("Wrong url or name, can't find this server", e);
-//        } catch (SQLException e) {
-//            LOGGER.error("Can't access to our DB", e);
-//        }
-//    }
-
-    @Override
-    public void connectDB() {
-        driver = new OracleDriver();
-        try {
-            DriverManager.registerDriver(driver);
-            connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE",
-                    "FIRST_OWN_DB", "ujhskf[][fnf");
-            if (!connection.isClosed()) {
-                LOGGER.info("Connection is successful");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
     @Autowired
     private ResourceLoader resourceLoader;
 
     private int numberTables;
+
+    @Override
+    public void connectDB() {
+        hashtable.put(Context.INITIAL_CONTEXT_FACTORY, contextFactory);
+        hashtable.put(Context.PROVIDER_URL, urlAddress);
+        try {
+            context = new InitialContext(hashtable);
+            dataSource = (DataSource) context.lookup(nameDataBase);
+            connection = dataSource.getConnection();
+            LOGGER.info("Connection successfully got");
+        } catch (NamingException e) {
+            LOGGER.error("Wrong url or name, can't find this server", e);
+        } catch (SQLException e) {
+            LOGGER.error("Can't access to our DB", e);
+        }
+    }
 
     @PostConstruct
     public void runScript() throws SQLException {
@@ -105,15 +90,11 @@ public class ManageDb implements Connectable {
             if (ps != null) {
                 ps.close();
             }
-            connection.close();
-//            if (connection != null) {
-//                connection.close();
-//            }
-//            if (context != null) {
-//                context.close();
-//            }
-//            context.close();
-        } catch (SQLException e) {
+            if (connection != null) {
+                connection.close();
+            }
+            context.close();
+        } catch (NamingException | SQLException e) {
             LOGGER.error("Can't disconnect from our DB", e);
         }
     }

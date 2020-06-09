@@ -3,11 +3,11 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>ua.packager</groupId>
-	<artifactId>spring-mvc-airline-tickets</artifactId>
+	<artifactId>spring-security-demo</artifactId>
 	<version>1.0</version>
 	<packaging>war</packaging>
 
-	<name>spring-mvc-airline-tickets-maven-webapp</name>
+	<name>spring-security-demo</name>
 
 	<properties>
 		<springframework.version>5.0.2.RELEASE</springframework.version>
@@ -92,7 +92,7 @@
 
 	<build>
 		<finalName>
-			pring-mvc-airline-tickets
+			spring-security-demo
 		</finalName>
 		<pluginManagement>
 			<plugins>
