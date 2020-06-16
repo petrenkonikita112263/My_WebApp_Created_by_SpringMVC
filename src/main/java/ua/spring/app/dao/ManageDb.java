@@ -32,7 +32,6 @@ public class ManageDb implements Connectable {
     protected Connection connection;
     protected ResultSet rs;
     protected PreparedStatement ps;
-    private Hashtable<String, String> hashtable = new Hashtable<>();
 
     @Value("${URL_DB}")
     private String urlAddress;
@@ -50,6 +49,7 @@ public class ManageDb implements Connectable {
 
     @Override
     public void connectDB() {
+        Hashtable<String, String> hashtable = new Hashtable<>();
         hashtable.put(Context.INITIAL_CONTEXT_FACTORY, contextFactory);
         hashtable.put(Context.PROVIDER_URL, urlAddress);
         try {
@@ -67,7 +67,7 @@ public class ManageDb implements Connectable {
     @PostConstruct
     public void runScript() throws SQLException {
         connectDB();
-        ps = connection.prepareStatement("SELECT COUNT(*) QUANTITY FROM all_tables WHERE owner='FIRST_OWN_DB' and TABLE_NAME like 'LAB3PN%'");
+        ps = connection.prepareStatement("SELECT COUNT(*) QUANTITY FROM all_tables WHERE TABLE_NAME LIKE 'LAB3PN%'");
         rs = ps.executeQuery();
         while (rs.next()) {
             numberTables = rs.getInt("QUANTITY");
