@@ -101,8 +101,8 @@ public class DisplayDao extends ManageDb implements Displayable {
             LOGGER.error("Invalid sql query", e);
         } finally {
             disconnectDB();
-            return planes;
         }
+        return planes;
     }
 
     private Plane parsePlane(ResultSet resultSet) {
