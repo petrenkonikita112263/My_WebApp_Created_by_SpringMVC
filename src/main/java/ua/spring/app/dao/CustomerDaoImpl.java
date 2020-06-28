@@ -1,6 +1,7 @@
 package ua.spring.app.dao;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import ua.spring.app.entity.Customer;
 import ua.spring.app.entity.CustomerOrder;
@@ -12,16 +13,18 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static ua.spring.app.dao.ConstantQuery.*;
+
 @Component
 public class CustomerDaoImpl extends ManageDb implements CustomerDao {
 
-    private static final Logger LOGGER = Logger.getLogger(CustomerDaoImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(CustomerDaoImpl.class);
 
     @Override
     public void removeCustomer(int id) {
         try {
             connectDB();
-            ps = connection.prepareStatement("DELETE LAB3PN_USERS WHERE CUSTOMER_ID = ? AND AUTHORITY LIKE 'ROLE_CUSTOMER'");
+            ps = connection.prepareStatement(DELETE_CUSTOMER);
             ps.setInt(1, id);
             rs = ps.executeQuery();
         } catch (SQLException e) {
@@ -36,9 +39,7 @@ public class CustomerDaoImpl extends ManageDb implements CustomerDao {
         List<OrderTicket> orders = new ArrayList<>();
         try {
             connectDB();
-            ps = connection.prepareStatement("SELECT * FROM LAB3PN_ORDER_TICKET WHERE CUSTOMER_ORDER_ID = "
-                    + "(SELECT CUSTOMER_ORDER_ID FROM LAB3PN_CUSTOMER_ORDER WHERE CUSTOMER_ID = "
-                    + "(SELECT CUSTOMER_ID FROM LAB3PN_USERS WHERE USERNAME LIKE ?) AND ROWNUM = 1)");
+            ps = connection.prepareStatement(VIEW_TICKET_HISTORY);
             ps.setString(1, customerName);
             rs = ps.executeQuery();
             OrderTicket orderTicket;
@@ -71,8 +72,7 @@ public class CustomerDaoImpl extends ManageDb implements CustomerDao {
         List<CustomerOrder> customerOrders = new ArrayList<>();
         try {
             connectDB();
-            ps = connection.prepareStatement("SELECT * FROM LAB3PN_CUSTOMER_ORDER WHERE CUSTOMER_ID = "
-                    + "(SELECT CUSTOMER_ID FROM LAB3PN_USERS WHERE USERNAME = ?)");
+            ps = connection.prepareStatement(VIEW_ORDER_HISTORY);
             ps.setString(1, customerName);
             rs = ps.executeQuery();
             CustomerOrder customerOrder;
@@ -108,7 +108,7 @@ public class CustomerDaoImpl extends ManageDb implements CustomerDao {
         List<Ticket> tickets = new ArrayList<>();
         connectDB();
         try {
-            ps = connection.prepareStatement("SELECT * FROM LAB3PN_TICKET");
+            ps = connection.prepareStatement(VIEW_TICKET_LIST);
             rs = ps.executeQuery();
             Ticket ticket;
             while (rs.next()) {
@@ -144,7 +144,7 @@ public class CustomerDaoImpl extends ManageDb implements CustomerDao {
         List<Customer> customers = new ArrayList<>();
         try {
             connectDB();
-            ps = connection.prepareStatement("SELECT * FROM LAB3PN_USERS WHERE AUTHORITY LIKE 'ROLE_CUSTOMER'");
+            ps = connection.prepareStatement(CUSTOMERS_LIST);
             rs = ps.executeQuery();
             Customer customer;
             while (rs.next()) {
@@ -177,8 +177,7 @@ public class CustomerDaoImpl extends ManageDb implements CustomerDao {
     public void addCustomer(String name, String password) {
         connectDB();
         try {
-            ps = connection.prepareStatement("INSERT INTO LAB3PN_USERS(CUSTOMER_ID, USERNAME, PASSWORD, AUTHORITY, ENABLED)\n" +
-                    "VALUES(LAB3PN_USERS_SEQ.NEXTVAL, ?, ?, 'ROLE_CUSTOMER', 1)");
+            ps = connection.prepareStatement(ADD_CUSTOMER);
             ps.setString(1, name);
             ps.setString(2, password);
             rs = ps.executeQuery();
@@ -195,7 +194,7 @@ public class CustomerDaoImpl extends ManageDb implements CustomerDao {
         Customer customer = null;
         connectDB();
         try {
-            ps = connection.prepareStatement("SELECT * FROM LAB3PN_USERS WHERE CUSTOMER_ID = ? AND AUTHORITY LIKE 'ROLE_CUSTOMER'");
+            ps = connection.prepareStatement(FIND_CUSTOMER);
             ps.setInt(1, id);
             rs = ps.executeQuery();
             while (rs.next()) {
@@ -213,8 +212,7 @@ public class CustomerDaoImpl extends ManageDb implements CustomerDao {
     public void updateCustomerData(int id, String customerName, String customerPassword) {
         connectDB();
         try {
-            ps = connection.prepareStatement("UPDATE LAB3PN_USERS "
-                    + "SET USERNAME = ?, PASSWORD = ? WHERE CUSTOMER_ID = ?");
+            ps = connection.prepareStatement(UPDATE_CUSTOMER);
             ps.setString(1, customerName);
             ps.setString(2, customerPassword);
             ps.setInt(3, id);
@@ -232,7 +230,7 @@ public class CustomerDaoImpl extends ManageDb implements CustomerDao {
         Ticket ticket = null;
         connectDB();
         try {
-            ps = connection.prepareStatement("SELECT * FROM LAB3PN_TICKET WHERE TICKET_ID = ?");
+            ps = connection.prepareStatement(FIND_TICKET);
             ps.setInt(1, id);
             rs = ps.executeQuery();
             while (rs.next()) {

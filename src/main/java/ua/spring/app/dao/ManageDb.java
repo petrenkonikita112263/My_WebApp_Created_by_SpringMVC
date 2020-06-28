@@ -1,6 +1,7 @@
 package ua.spring.app.dao;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
@@ -22,11 +23,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Hashtable;
 
+import static ua.spring.app.dao.ConstantQuery.CHECK_EXISTED_TABLES;
+
 @Repository
 @PropertySource("classpath:application.properties")
 public class ManageDb implements Connectable {
 
-    private static final Logger LOGGER = Logger.getLogger(ManageDb.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ManageDb.class);
     private DataSource dataSource;
     private Context context;
     protected Connection connection;
@@ -67,7 +70,7 @@ public class ManageDb implements Connectable {
     @PostConstruct
     public void runScript() throws SQLException {
         connectDB();
-        ps = connection.prepareStatement("SELECT COUNT(*) QUANTITY FROM all_tables WHERE TABLE_NAME LIKE 'LAB3PN%'");
+        ps = connection.prepareStatement(CHECK_EXISTED_TABLES);
         rs = ps.executeQuery();
         while (rs.next()) {
             numberTables = rs.getInt("QUANTITY");

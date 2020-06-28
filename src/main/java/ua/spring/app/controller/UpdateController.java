@@ -1,6 +1,7 @@
 package ua.spring.app.controller;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -13,7 +14,7 @@ import ua.spring.app.service.Showable;
 @Controller
 public class UpdateController {
 
-    private static final Logger LOGGER = Logger.getLogger(UpdateController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(UpdateController.class);
 
     @Autowired
     private Customable customerService;

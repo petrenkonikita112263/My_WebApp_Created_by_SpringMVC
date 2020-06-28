@@ -1,7 +1,8 @@
 package ua.spring.app.config;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -23,7 +24,7 @@ import java.beans.PropertyVetoException;
 @PropertySource("classpath:application.properties")
 public class AppConfig implements WebMvcConfigurer {
 
-    private static final Logger LOGGER = Logger.getLogger(AppConfig.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(AppConfig.class);
 
     @Autowired
     private Environment env;

@@ -1,24 +1,25 @@
 package ua.spring.app.dao;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.sql.Date;
 import java.sql.SQLException;
 
+import static ua.spring.app.dao.ConstantQuery.*;
+
 @Component
 public class OrderDaoImpl extends ManageDb implements OrderDao {
 
-    private static final Logger LOGGER = Logger.getLogger(OrderDaoImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(OrderDaoImpl.class);
 
     @Override
     public void addFlightTicket(String number, int flightId, String text, String startDate,
                                 String endDate, double price) {
         connectDB();
         try {
-            ps = connection.prepareStatement("INSERT INTO LAB3PN_TICKET(TICKET_ID, SERIAL_NUMBER, FLIGHT_ID, "
-                    + "DESCRIPTION, FLIGHT_DATE, ARRIVAL_DATE, PRICE) "
-                    + "VALUES(LAB3PN_TICKET_SEQ.NEXTVAL, ?, ?, ?, ?, ?, ?)");
+            ps = connection.prepareStatement(ADD_FLIGHT_TICKET);
             ps.setString(1, number);
             ps.setInt(2, flightId);
             ps.setString(3, text);
@@ -38,7 +39,7 @@ public class OrderDaoImpl extends ManageDb implements OrderDao {
     public void removeFlightTicket(int id) {
         try {
             connectDB();
-            ps = connection.prepareStatement("DELETE LAB3PN_TICKET WHERE TICKET_ID = ?");
+            ps = connection.prepareStatement(DELETE_FLIGHT_TICKET);
             ps.setInt(1, id);
             rs = ps.executeQuery();
         } catch (SQLException e) {
@@ -53,9 +54,7 @@ public class OrderDaoImpl extends ManageDb implements OrderDao {
                                  String endDate, double price) {
         connectDB();
         try {
-            ps = connection.prepareStatement("UPDATE LAB3PN_TICKET "
-                    + "SET SERIAL_NUMBER = ?, FLIGHT_ID = ?, DESCRIPTION = ?, FLIGHT_DATE = ?, "
-                    + "ARRIVAL_DATE = ?, PRICE = ? WHERE TICKET_ID = ?");
+            ps = connection.prepareStatement(UPDATE_FLIGHT_TICKET);
             ps.setString(1, number);
             ps.setInt(2, flightId);
             ps.setString(3, text);
@@ -76,10 +75,7 @@ public class OrderDaoImpl extends ManageDb implements OrderDao {
                                double discount, double finalPrice, int ticketId) {
         connectDB();
         try {
-            ps = connection.prepareStatement("BEGIN INSERT INTO LAB3PN_CUSTOMER_ORDER(CUSTOMER_ORDER_ID, CUSTOMER_ID, "
-                    + "ORDER_TIME, PRICE, DISCOUNT, FINAL_PRICE) VALUES (LAB3PN_CUSTOMER_SEQ.NEXTVAL, "
-                    + "(SELECT CUSTOMER_ID FROM LAB3PN_USERS WHERE LAB3PN_USERS.USERNAME = ?), "
-                    + "?, ?, ?, ?); INSERT INTO LAB3PN_ORDER_TICKET(ORDER_ID, CUSTOMER_ORDER_ID, TICKET_ID) VALUES (LAB3PN_ORDER_SEQ.NEXTVAL, LAB3PN_CUSTOMER_SEQ.currval, ?); END;");
+            ps = connection.prepareStatement(PERFORM_ORDER);
             ps.setString(1, customerName);
             ps.setDate(2, orderTime);
             ps.setDouble(3, price);

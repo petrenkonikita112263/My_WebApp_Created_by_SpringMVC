@@ -1,6 +1,7 @@
 package ua.spring.app.dao;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import ua.spring.app.entity.Airport;
 import ua.spring.app.entity.Flight;
@@ -11,17 +12,19 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static ua.spring.app.dao.ConstantQuery.*;
+
 @Component
 public class DisplayDao extends ManageDb implements Displayable {
 
-    private static final Logger LOGGER = Logger.getLogger(DisplayDao.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(DisplayDao.class);
 
     @Override
     public List<Airport> getAirportInfo() {
         List<Airport> airports = new ArrayList<>();
         connectDB();
         try {
-            ps = connection.prepareStatement("SELECT * FROM LAB3PN_AIRPORT");
+            ps = connection.prepareStatement(VIEW_AIRPORT_LIST);
             rs = ps.executeQuery();
             Airport airport;
             while (rs.next()) {
@@ -54,7 +57,7 @@ public class DisplayDao extends ManageDb implements Displayable {
         connectDB();
         System.out.println("We're rertieve data from DB");
         try {
-            ps = connection.prepareStatement("SELECT * FROM LAB3PN_FLIGHT");
+            ps = connection.prepareStatement(VIEW_FLIGHT_LIST);
             rs = ps.executeQuery();
             Flight flight;
             while (rs.next()) {
@@ -90,7 +93,7 @@ public class DisplayDao extends ManageDb implements Displayable {
         List<Plane> planes = new ArrayList<>();
         connectDB();
         try {
-            ps = connection.prepareStatement("SELECT * FROM LAB3PN_PLANE");
+            ps = connection.prepareStatement(VIEW_PLANE_LIST);
             rs = ps.executeQuery();
             Plane plane;
             while (rs.next()) {

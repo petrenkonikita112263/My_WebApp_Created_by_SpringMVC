@@ -1,6 +1,7 @@
 package ua.spring.app.controller;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -19,7 +20,7 @@ import java.security.Principal;
 @Controller
 public class DisplayController {
 
-    private static final Logger LOGGER = Logger.getLogger(DisplayController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(DisplayController.class);
 
     @Autowired
     private Showable displayService;
