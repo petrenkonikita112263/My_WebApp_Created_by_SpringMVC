@@ -1,7 +1,13 @@
 package ua.spring.app.dao;
 
+/**
+ * Final class that holds all list of queries for Oracle.
+ */
 public final class ConstantQuery {
 
+    /**
+     * Private EVC.
+     */
     private ConstantQuery() {
     }
 

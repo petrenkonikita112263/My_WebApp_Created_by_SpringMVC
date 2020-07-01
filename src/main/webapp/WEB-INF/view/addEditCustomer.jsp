@@ -16,15 +16,29 @@
             <form:form action="${pageContext.request.contextPath}/systems/addCustomer" method="post">
             <div class="row">
                 <div class="col-25">
-                    <label for="username_1">Username:</label>
+                    <label for="firstname_1">First Name:</label>
                 </div>
                 <div class="col-75">
                     <input type="text"
-                       id="username_1"
-                       name="name"
-                       placeholder="Enter the username"
-                       pattern="^[a-zA-Z][a-zA-Z0-9-_\.]{1,50}$"
-                       title="The username must be wtih 2-50 chars"
+                       id="firstname_1"
+                       name="firstName"
+                       placeholder="Enter the name"
+                       pattern="[A-Za-z]{1,24}"
+                       title="The name must holds Alpha chars, can't be bigger that 24 chars"
+                       required>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-25">
+                    <label for="lastname_1">Last Name:</label>
+                </div>
+                <div class="col-75">
+                    <input type="text"
+                       id="lastname_1"
+                       name="surname"
+                       placeholder="Enter the surname"
+                       pattern="[A-Za-z]{1,24}"
+                       title="The surname must holds Alpha chars, can't be bigger that 24 chars"
                        required>
                 </div>
             </div>
@@ -37,9 +51,9 @@
                        id="userpassword_1"
                        name="password"
                        placeholder="Enter the password"
-                       pattern="^{noop}"
-                       title="The password should start with this text {noop} and after that type your password"
-                       value="{noop}"
+                       pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$"
+                       title="The password should start have at least one UpperCase, one LowerCase,
+                                one Number or SpecialChar and be more than 8 chars"
                        required>
                 </div>
             </div>
@@ -58,19 +72,33 @@
         <c:if test="${operation == 'update'}">
             <p>Change existed customer</p>
             <form:form action="${pageContext.request.contextPath}/systems/updateCustomer" method="post">
-                <input type="hidden" name="customerId" value="${customer.id}">
+            <input type="hidden" name="customerId" value="${customer.id}">
             <div class="row">
                 <div class="col-25">
-                    <label for="username_2">Username:</label>
+                    <label for="firstname_2">First Name:</label>
                 </div>
                 <div class="col-75">
                     <input type="text"
-                       id="username_2"
-                       name="name"
-                       placeholder="Enter the username"
-                       pattern="^[a-zA-Z][a-zA-Z0-9-_\.]{1,50}$"
-                       title="The username must be wtih 2-50 chars"
-                       required>
+                           id="firstname_2"
+                           name="firstName"
+                           placeholder="Enter the name"
+                           pattern="[A-Za-z]{1,24}"
+                           title="The name must holds Alpha chars, can't be bigger that 24 chars"
+                           required>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-25">
+                    <label for="lastname_2">Last Name:</label>
+                </div>
+                <div class="col-75">
+                    <input type="text"
+                           id="lastname_2"
+                           name="surname"
+                           placeholder="Enter the surname"
+                           pattern="[A-Za-z]{1,24}"
+                           title="The surname must holds Alpha chars, can't be bigger that 24 chars"
+                           required>
                 </div>
             </div>
             <div class="row">
@@ -82,9 +110,9 @@
                        id="userpassword_2"
                        name="password"
                        placeholder="Enter the password"
-                       pattern="(?!({noop}|{bcrypt})$)\S+"
-                       title="The password should start with this text {noop} and after that type your password"
-                       value="{noop}"
+                       pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$"
+                       title="The password should start have at least one UpperCase, one LowerCase,
+                                one Number or SpecialChar and be more than 8 chars"
                        required>
                 </div>
             </div>

@@ -18,17 +18,37 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import javax.sql.DataSource;
 import java.beans.PropertyVetoException;
 
+/**
+ * Main configuration class for this app.
+ *
+ * @Configuration - this class is Java Configuration.
+ * @EnableWebMvc - app uses MVC.
+ * @ComponentScan - looks for the components in app.
+ * @PropertySource - externalizes the configuration to a property file.
+ */
 @Configuration
 @EnableWebMvc
 @ComponentScan(basePackages = "ua.spring.app")
 @PropertySource("classpath:application.properties")
 public class AppConfig implements WebMvcConfigurer {
 
+    /**
+     * Constant for this class that add logging functionality.
+     */
     private static final Logger LOGGER = LoggerFactory.getLogger(AppConfig.class);
 
+    /**
+     * Inject the environment field in order to obtain the property.
+     */
     @Autowired
     private Environment env;
 
+    /**
+     * Annotation indicates the bean initialization that gonna created by DI.
+     * This method sets View Resolver - where pages are store and theirs format.
+     *
+     * @return get the object of view resolver
+     */
     @Bean
     public ViewResolver viewResolver() {
         InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
@@ -37,6 +57,13 @@ public class AppConfig implements WebMvcConfigurer {
         return viewResolver;
     }
 
+    /**
+     * Annotation indicates the bean initialization that gonna created by DI.
+     * This method gets the datasource object from connection that's created
+     * using data info (JDBC) from property file.
+     *
+     * @return get the object of datasource
+     */
     @Bean
     public DataSource securityDataSource() {
         ComboPooledDataSource securityDataSource = new ComboPooledDataSource();
@@ -56,12 +83,22 @@ public class AppConfig implements WebMvcConfigurer {
         return securityDataSource;
     }
 
+    /**
+     * Helpful method that parse String value to Int.
+     *
+     * @return return int value
+     */
     private int getIntProperty(String propertyName) {
         String propertyValue = env.getProperty(propertyName);
         int integerPropertyValue = Integer.parseInt(propertyValue);
         return integerPropertyValue;
     }
 
+    /**
+     * Implementing methods from WebMvcConfigurer interface.
+     * Method sets up the bootstrap files or additional css|js files and
+     * registers them as static resource handles.
+     */
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/static/**")

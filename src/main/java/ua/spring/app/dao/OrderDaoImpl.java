@@ -9,11 +9,23 @@ import java.sql.SQLException;
 
 import static ua.spring.app.dao.ConstantQuery.*;
 
+/**
+ * Class that effects on the flight ticket
+ * extends ManageDb and implements its own interface.
+ *
+ * @Component annotate our component class
+ */
 @Component
 public class OrderDaoImpl extends ManageDb implements OrderDao {
 
+    /**
+     * Constant for this class that add logging functionality.
+     */
     private static final Logger LOGGER = LoggerFactory.getLogger(OrderDaoImpl.class);
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void addFlightTicket(String number, int flightId, String text, String startDate,
                                 String endDate, double price) {
@@ -35,6 +47,9 @@ public class OrderDaoImpl extends ManageDb implements OrderDao {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void removeFlightTicket(int id) {
         try {
@@ -49,6 +64,9 @@ public class OrderDaoImpl extends ManageDb implements OrderDao {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void editFlightTicket(int id, String number, int flightId, String text, String startDate,
                                  String endDate, double price) {
@@ -70,6 +88,9 @@ public class OrderDaoImpl extends ManageDb implements OrderDao {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void addOrderTicket(String customerName, Date orderTime, double price,
                                double discount, double finalPrice, int ticketId) {

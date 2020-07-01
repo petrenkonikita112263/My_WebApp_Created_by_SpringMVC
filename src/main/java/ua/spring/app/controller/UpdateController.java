@@ -39,10 +39,12 @@ public class UpdateController {
     @PostMapping(value = "/systems/updateCustomer")
     public ModelAndView updateCustomer(ModelAndView modelAndView,
                                        @RequestParam(value = "customerId", required = false) Integer customerId,
-                                       @RequestParam(value = "name", required = false) String name,
+                                       @RequestParam(value = "firstName", required = false) String firstName,
+                                       @RequestParam(value = "surname", required = false) String surname,
                                        @RequestParam(value = "password", required = false) String password) {
         LOGGER.info("Method to create new customer was called");
-        customerService.updateCustomerData(customerId, name, password);
+        customerService.updateCustomerData(customerId, firstName + " " + surname,
+                "{noop}" + password);
         modelAndView.addObject("infoMessage", "new customer");
         modelAndView.setViewName("admins");
         LOGGER.info("Successfully redirect to the jsp page");

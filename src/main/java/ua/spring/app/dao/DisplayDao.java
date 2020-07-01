@@ -14,11 +14,23 @@ import java.util.List;
 
 import static ua.spring.app.dao.ConstantQuery.*;
 
+/**
+ * Class that displays additional info from the database extends ManageDb
+ * and implements its own interface.
+ *
+ * @Component annotate our component class
+ */
 @Component
 public class DisplayDao extends ManageDb implements Displayable {
 
+    /**
+     * Constant for this class that add logging functionality.
+     */
     private static final Logger LOGGER = LoggerFactory.getLogger(DisplayDao.class);
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Airport> getAirportInfo() {
         List<Airport> airports = new ArrayList<>();
@@ -39,6 +51,13 @@ public class DisplayDao extends ManageDb implements Displayable {
         return airports;
     }
 
+    /**
+     * Additional method that run lines in Airport table, sets value from it to particular
+     * object and after all return it.
+     *
+     * @param resultSet cursor which points to the current data table row
+     * @return object of Airport class
+     */
     private Airport parseAirport(ResultSet resultSet) {
         Airport airport = new Airport();
         try {
@@ -51,6 +70,9 @@ public class DisplayDao extends ManageDb implements Displayable {
         return airport;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Flight> getFlightInfo() {
         List<Flight> flights = new ArrayList<>();
@@ -73,6 +95,13 @@ public class DisplayDao extends ManageDb implements Displayable {
         return flights;
     }
 
+    /**
+     * Additional method that run lines in Flight table, sets value from it to particular
+     * object and after all return it.
+     *
+     * @param resultSet cursor which points to the current data table row
+     * @return object of Flight class
+     */
     private Flight parseFlight(ResultSet resultSet) {
         Flight flight = new Flight();
         try {
@@ -88,6 +117,9 @@ public class DisplayDao extends ManageDb implements Displayable {
         return flight;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Plane> getPlaneInfo() {
         List<Plane> planes = new ArrayList<>();
@@ -108,6 +140,13 @@ public class DisplayDao extends ManageDb implements Displayable {
         return planes;
     }
 
+    /**
+     * Additional method that run lines in Plane table, sets value from it to particular
+     * object and after all return it.
+     *
+     * @param resultSet cursor which points to the current data table row
+     * @return object of Plane class
+     */
     private Plane parsePlane(ResultSet resultSet) {
         Plane plane = new Plane();
         try {

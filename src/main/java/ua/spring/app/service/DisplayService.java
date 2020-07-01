@@ -9,22 +9,32 @@ import ua.spring.app.entity.Plane;
 
 import java.util.List;
 
+/**
+ * This class represents a service - a component of a service layer,
+ * also implements all the methods from Showable interface.
+ */
 @Service
 public class DisplayService implements Showable {
 
+    /**
+     * Field inject of displayable dao object.
+     */
     @Autowired
     private Displayable additionalDao;
 
+    /**{@inheritDoc}*/
     @Override
     public List<Airport> getAirportInfo() {
         return additionalDao.getAirportInfo();
     }
 
+    /**{@inheritDoc}*/
     @Override
     public List<Flight> getFlightInfo() {
         return additionalDao.getFlightInfo();
     }
 
+    /**{@inheritDoc}*/
     @Override
     public List<Plane> getPlaneInfo() {
         return additionalDao.getPlaneInfo();

@@ -41,10 +41,11 @@ public class AddController {
     @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping(value = "/systems/addCustomer")
     public ModelAndView createCustomer(ModelAndView modelAndView,
-                                       @RequestParam(value = "name", required = false) String name,
+                                       @RequestParam(value = "firstName", required = false) String firstName,
+                                       @RequestParam(value = "surname", required = false) String surname,
                                        @RequestParam(value = "password", required = false) String password) {
         LOGGER.info("Method to create new customer was called");
-        customerService.addCustomer(name, password);
+        customerService.addCustomer(firstName + " " + surname, "{noop}" + password);
         modelAndView.addObject("infoMessage", "new customer");
         modelAndView.setViewName("admins");
         LOGGER.info("Successfully redirect to the jsp page");

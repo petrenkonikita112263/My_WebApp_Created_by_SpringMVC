@@ -25,31 +25,79 @@ import java.util.Hashtable;
 
 import static ua.spring.app.dao.ConstantQuery.CHECK_EXISTED_TABLES;
 
+/**
+ * Class represents process of connection to the database, creates tables and fills them,
+ * after that close the connection.
+ *
+ * @Repositry - shows that the class functions as a repository
+ * @PropertySource -  convenient mechanism for adding property sources to the environment
+ */
 @Repository
 @PropertySource("classpath:application.properties")
 public class ManageDb implements Connectable {
 
+    /**
+     * Constant for this class that add logging functionality.
+     */
     private static final Logger LOGGER = LoggerFactory.getLogger(ManageDb.class);
+
+    /**
+     * Part of JDBC get ability to obtain a connection to the database.
+     */
     private DataSource dataSource;
+
+    /**
+     * The Initial JNDI Context.
+     */
     private Context context;
+
+    /**
+     * Represents a link from an application to the database.
+     */
     protected Connection connection;
+
+    /**
+     * An object that represents a database table entry.
+     */
     protected ResultSet rs;
+    /**
+     * An SQL Statement that is precompiled
+     */
     protected PreparedStatement ps;
 
+    /**
+     * Retrieve the url address from property file to Weblogic.
+     */
     @Value("${URL_DB}")
     private String urlAddress;
 
+    /**
+     * Retrieve the JNDI name from property file to Weblogic.
+     */
     @Value("${JNDI_NAME_DB}")
     private String nameDataBase;
 
+    /**
+     * Retrieve the class of context factory to Weblogic.
+     */
     @Value("${CONTEXT_FACTORY}")
     private String contextFactory;
 
+    /**
+     * Inject the field of ResourceLoader object to retrieve resource files
+     * classpath.
+     */
     @Autowired
     private ResourceLoader resourceLoader;
 
+    /**
+     * Integer number of quantity of tables in database.
+     */
     private int numberTables;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void connectDB() {
         Hashtable<String, String> hashtable = new Hashtable<>();
@@ -67,6 +115,14 @@ public class ManageDb implements Connectable {
         }
     }
 
+    /**
+     * Method that check if tables that starts with name 'LAB3PN' existed in the database,
+     * if there's no - applications runs script for creation and filling these tables.
+     *
+     * @throws SQLException can't create object of PS or execute specific query
+     * @PostConstruct involves into Spring Bean's lifecycle before creating object after calling
+     * constructor
+     */
     @PostConstruct
     public void runScript() throws SQLException {
         connectDB();
@@ -84,6 +140,9 @@ public class ManageDb implements Connectable {
         disconnectDB();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void disconnectDB() {
         try {

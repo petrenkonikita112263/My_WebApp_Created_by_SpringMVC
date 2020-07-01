@@ -15,11 +15,23 @@ import java.util.List;
 
 import static ua.spring.app.dao.ConstantQuery.*;
 
+/**
+ * Class that provides the customer's actions and effects on the customer
+ * extends ManageDb and implements its own interface.
+ *
+ * @Component annotate our component class
+ */
 @Component
 public class CustomerDaoImpl extends ManageDb implements CustomerDao {
 
+    /**
+     * Constant for this class that add logging functionality.
+     */
     private static final Logger LOGGER = LoggerFactory.getLogger(CustomerDaoImpl.class);
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void removeCustomer(int id) {
         try {
@@ -34,6 +46,9 @@ public class CustomerDaoImpl extends ManageDb implements CustomerDao {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<OrderTicket> listOwnOrderTicketHistory(String customerName) {
         List<OrderTicket> orders = new ArrayList<>();
@@ -55,6 +70,13 @@ public class CustomerDaoImpl extends ManageDb implements CustomerDao {
         return orders;
     }
 
+    /**
+     * Additional method that run lines in OrderTicket table,
+     * sets value from it to particular object and after all return it.
+     *
+     * @param resultSet cursor which points to the current data table row
+     * @return object of OrderTicket class
+     */
     private OrderTicket parseOrderTicket(ResultSet resultSet) {
         OrderTicket orderTicket = new OrderTicket();
         try {
@@ -67,6 +89,9 @@ public class CustomerDaoImpl extends ManageDb implements CustomerDao {
         return orderTicket;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<CustomerOrder> listOwnOrderHistory(String customerName) {
         List<CustomerOrder> customerOrders = new ArrayList<>();
@@ -88,6 +113,13 @@ public class CustomerDaoImpl extends ManageDb implements CustomerDao {
         return customerOrders;
     }
 
+    /**
+     * Additional method that run lines in CustomerOrder table,
+     * sets value from it to particular object and after all return it.
+     *
+     * @param resultSet cursor which points to the current data table row
+     * @return object of CustomerOrder class
+     */
     private CustomerOrder parseCustomerOrder(ResultSet resultSet) {
         CustomerOrder customerOrder = new CustomerOrder();
         try {
@@ -103,6 +135,9 @@ public class CustomerDaoImpl extends ManageDb implements CustomerDao {
         return customerOrder;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Ticket> listTicket() {
         List<Ticket> tickets = new ArrayList<>();
@@ -123,6 +158,13 @@ public class CustomerDaoImpl extends ManageDb implements CustomerDao {
         return tickets;
     }
 
+    /**
+     * Additional method that run lines in Ticket table, sets value from it to particular
+     * object and after all return it.
+     *
+     * @param resultSet cursor which points to the current data table row
+     * @return object of Ticket class
+     */
     private Ticket parseTicket(ResultSet resultSet) {
         Ticket ticket = new Ticket();
         try {
@@ -139,6 +181,9 @@ public class CustomerDaoImpl extends ManageDb implements CustomerDao {
         return ticket;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Customer> getCustomers() {
         List<Customer> customers = new ArrayList<>();
@@ -159,6 +204,13 @@ public class CustomerDaoImpl extends ManageDb implements CustomerDao {
         return customers;
     }
 
+    /**
+     * Additional method that run lines in Customer table, sets value from it to particular
+     * object and after all return it.
+     *
+     * @param resultSet cursor which points to the current data table row
+     * @return object of Customer class
+     */
     private Customer parseCustomer(ResultSet resultSet) {
         Customer customer = new Customer();
         try {
@@ -173,6 +225,9 @@ public class CustomerDaoImpl extends ManageDb implements CustomerDao {
         return customer;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void addCustomer(String name, String password) {
         connectDB();
@@ -189,6 +244,9 @@ public class CustomerDaoImpl extends ManageDb implements CustomerDao {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Customer findById(int id) {
         Customer customer = null;
@@ -208,6 +266,9 @@ public class CustomerDaoImpl extends ManageDb implements CustomerDao {
         return customer;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void updateCustomerData(int id, String customerName, String customerPassword) {
         connectDB();
@@ -224,7 +285,9 @@ public class CustomerDaoImpl extends ManageDb implements CustomerDao {
         }
     }
 
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Ticket getFlightTicketById(int id) {
         Ticket ticket = null;
