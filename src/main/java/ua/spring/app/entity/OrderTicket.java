@@ -11,12 +11,6 @@ public class OrderTicket {
     public OrderTicket() {
     }
 
-    public OrderTicket(int orderId, int customerOrderId, int ticketId) {
-        this.orderId = orderId;
-        this.customerOrderId = customerOrderId;
-        this.ticketId = ticketId;
-    }
-
     public int getOrderId() {
         return orderId;
     }

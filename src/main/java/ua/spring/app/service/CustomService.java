@@ -1,6 +1,5 @@
 package ua.spring.app.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.spring.app.dao.CustomerDao;
 import ua.spring.app.entity.Customer;
@@ -17,11 +16,14 @@ import java.util.List;
 @Service
 public class CustomService implements Customable {
 
+    private final CustomerDao customerDao;
+
     /**
-     * Field inject of class object.
+     * Constructor inject of class object.
      */
-    @Autowired
-    private CustomerDao customerDao;
+    public CustomService(CustomerDao customerDao) {
+        this.customerDao = customerDao;
+    }
 
     /**
      * {@inheritDoc}

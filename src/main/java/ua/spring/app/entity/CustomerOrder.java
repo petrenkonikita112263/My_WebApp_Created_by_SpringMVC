@@ -15,16 +15,6 @@ public class CustomerOrder {
     public CustomerOrder() {
     }
 
-    public CustomerOrder(int customerOrderId, int customerId, Date orderTime,
-                         double price, double discount, double finalPrice) {
-        this.customerOrderId = customerOrderId;
-        this.customerId = customerId;
-        this.orderTime = orderTime;
-        this.price = price;
-        this.discount = discount;
-        this.finalPrice = finalPrice;
-    }
-
     public int getCustomerOrderId() {
         return customerOrderId;
     }

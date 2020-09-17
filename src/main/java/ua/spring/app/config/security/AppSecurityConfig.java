@@ -1,6 +1,5 @@
 package ua.spring.app.config.security;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -20,11 +19,14 @@ import javax.sql.DataSource;
 @EnableWebSecurity
 public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
 
+    private final DataSource securityDataSource;
+
     /**
-     * Field injection of Datasource object
+     * Constructor injection of Datasource object
      */
-    @Autowired
-    private DataSource securityDataSource;
+    public AppSecurityConfig(DataSource securityDataSource) {
+        this.securityDataSource = securityDataSource;
+    }
 
     /**
      * Overriding the method that puts Spring Security authenticates the user.

@@ -2,7 +2,6 @@ package ua.spring.app.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,14 +20,17 @@ public class AddController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AddController.class);
 
-    @Autowired
-    private Customable customerService;
+    private final Customable customerService;
 
-    @Autowired
-    private Showable displayService;
+    private final Showable displayService;
 
-    @Autowired
-    private Orderable orderService;
+    private final Orderable orderService;
+
+    public AddController(Customable customerService, Showable displayService, Orderable orderService) {
+        this.customerService = customerService;
+        this.displayService = displayService;
+        this.orderService = orderService;
+    }
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping(value = "/systems/showCustomerForm")

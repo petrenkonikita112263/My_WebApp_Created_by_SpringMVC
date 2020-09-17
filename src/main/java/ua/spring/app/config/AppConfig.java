@@ -3,7 +3,6 @@ package ua.spring.app.config;
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -37,11 +36,14 @@ public class AppConfig implements WebMvcConfigurer {
      */
     private static final Logger LOGGER = LoggerFactory.getLogger(AppConfig.class);
 
+    private final Environment env;
+
     /**
      * Inject the environment field in order to obtain the property.
      */
-    @Autowired
-    private Environment env;
+    public AppConfig(Environment env) {
+        this.env = env;
+    }
 
     /**
      * Annotation indicates the bean initialization that gonna created by DI.
@@ -90,8 +92,7 @@ public class AppConfig implements WebMvcConfigurer {
      */
     private int getIntProperty(String propertyName) {
         String propertyValue = env.getProperty(propertyName);
-        int integerPropertyValue = Integer.parseInt(propertyValue);
-        return integerPropertyValue;
+        return Integer.parseInt(propertyValue);
     }
 
     /**

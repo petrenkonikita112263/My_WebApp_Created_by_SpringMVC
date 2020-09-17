@@ -2,7 +2,6 @@ package ua.spring.app.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.spring.app.dao.OrderDao;
 
@@ -21,11 +20,14 @@ public class OrderService implements Orderable {
      */
     private static final Logger LOGGER = LoggerFactory.getLogger(OrderService.class);
 
+    private final OrderDao orderDao;
+
     /**
-     * Field inject of orderDao object.
+     * Constructor inject of orderDao object.
      */
-    @Autowired
-    private OrderDao orderDao;
+    public OrderService(OrderDao orderDao) {
+        this.orderDao = orderDao;
+    }
 
     /**
      * {@inheritDoc}

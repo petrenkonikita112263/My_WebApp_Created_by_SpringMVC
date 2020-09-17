@@ -1,6 +1,5 @@
 package ua.spring.app.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.spring.app.dao.Displayable;
 import ua.spring.app.entity.Airport;
@@ -16,25 +15,34 @@ import java.util.List;
 @Service
 public class DisplayService implements Showable {
 
-    /**
-     * Field inject of displayable dao object.
-     */
-    @Autowired
-    private Displayable additionalDao;
+    private final Displayable additionalDao;
 
-    /**{@inheritDoc}*/
+    /**
+     * Constructor inject of displayable dao object.
+     */
+    public DisplayService(Displayable additionalDao) {
+        this.additionalDao = additionalDao;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Airport> getAirportInfo() {
         return additionalDao.getAirportInfo();
     }
 
-    /**{@inheritDoc}*/
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Flight> getFlightInfo() {
         return additionalDao.getFlightInfo();
     }
 
-    /**{@inheritDoc}*/
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Plane> getPlaneInfo() {
         return additionalDao.getPlaneInfo();
